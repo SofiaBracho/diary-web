@@ -1,0 +1,160 @@
+html {
+    box-sizing: border-box;
+    height: 100%;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+.contenedor {
+    margin: 0 auto;
+    width: 90%;
+    text-align: center;
+}
+/*ENTRADAS*/
+ul#datos {
+    padding: 0;
+}
+li {
+    list-style: none;
+    padding: 0 2rem;
+    background-color: #acacac;
+    margin: 1.5rem 0;
+    padding: 2rem;
+    border-radius: 5px;
+}
+h1 {
+    text-align: center;
+    color: grey;
+}
+.fecha {
+    color: #ffffff;
+    font-style: italic;
+}
+.titulo {
+    color: #0547b1;
+}
+/*HEADER*/
+header h1 {
+    display: inline-block;
+}
+header button {
+    float: right;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border: none;
+    background: rgb(28, 66, 163);
+    border-radius: 10px;
+    color: rgb(255, 255, 255, .7);
+    cursor: pointer;
+    transition: .3s;
+}
+header button:hover {
+    background: rgb(53, 129, 227);
+    padding-bottom: 1.2rem;
+    padding-top: .8rem;
+    color: #fff;
+}
+@media (max-width: 600px) {
+    header {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    header h1 {
+        display: block;
+        margin-bottom: 3rem;
+    }
+    header button {
+        float: none;
+    }
+}
+/*PAGINACION*/
+#paginacion {
+    padding-bottom: 3rem;
+}
+#paginacion .boton {
+    border: none;
+    background: rgb(53, 129, 227);
+    margin: 2px;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 5px;
+    transition: all .3s ease;
+    color: #fff;
+    font-size: 1.1rem;
+}
+#paginacion .boton:focus {
+    outline: none;
+}
+#paginacion .boton:hover {
+    background: rgba(53, 129, 227, .7);
+    cursor: pointer;
+}
+#paginacion .boton.actual {
+    background: rgb(28, 66, 163);
+}
+
+/*Formulario*/
+#formulario {
+    display: flex;
+    flex-direction: column;
+    background-color: #272657;
+    border-radius: 10px;
+}
+.seccion-superior {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+}
+#title {
+    font-size: 1.2rem;
+}
+#title, #date, #text {
+    background: border-box;
+    border: none;
+    color: #fff;
+    padding: 1.5rem;
+}
+#title, #date, #text:focus {
+    outline: none;
+}
+#text {
+    resize: none;
+    width: 90%;
+}
+#text::-webkit-scrollbar {
+    display: none;  
+}
+
+input[type="submit"] {
+    background: #3a4ea7;
+    color: rgba(255, 255, 255, .7);
+    height: 3rem;
+    border: none;
+    transition: .5s;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+input[type="submit"]:focus {
+    outline: none;
+}
+input[type="submit"]:hover {
+    background: #2a42b3;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+@media (max-width: 600px) {
+    .seccion-superior {
+        display: unset;
+        text-align: center;
+    }
+    #title {
+        width: 90%;
+        text-align: center;
+    }
+}

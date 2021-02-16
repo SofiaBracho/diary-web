@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable="yes">
+    <title>JSON</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://kit.fontawesome.com/72df3b1037.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="contenedor">
+        <h1>Miny Diary Web</h1>
+        <button id="boton-subir">Subir</button>
+    </header>
+    
+    <section class=contenedor>
+        <form action="#" id="formulario">
+            <div class="seccion-superior">
+                <label for="date">
+                    <i class=""></i>
+                    <input type="date" name="date" id="date" >
+                </label>
+
+                <label for="title">
+                    <input type="text" name="title" id="title" placeholder="Título">
+                </label>
+            </div>
+            
+            <label for="text">
+                <textarea name="text" id="text" cols="30" rows="10" placeholder="Escribe aquí..."></textarea>
+            </label>
+
+            <input type="hidden" id="accion" value="crear">
+            <input type="submit">
+        </form>
+
+        <ul id="datos">
+            <!-- Aqui van los datos del json -->
+        </ul>
+
+        <div id="paginacion">
+            <!-- Aqui van los botones de la paginacion -->
+        </div>
+    </section>
+
+    <script src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/show-data.js"></script>
+    <script src="js/form.js"></script>
+    <script src="js/upload-data.js"></script>
+</body>
+</html>
