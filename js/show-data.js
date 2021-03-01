@@ -4,8 +4,72 @@ $(function(){
     let text = document.getElementById("text");
     let action = document.getElementById("accion");
     let contenedorDatos = $('#datos');
+    let formulario = document.getElementById("formulario");
 
-    extraer();
+    //Cada vez que se cambia la fecha comprueba si existe la entrada y 
+    //trae los datos de la bd
+    date.addEventListener("change", comprobarFecha);
+    extraer(1);
+    cambiarFecha();
+    comprobarFecha();
+
+    function comprobarFecha() {
+        $.ajax({
+            type: 'post',
+            data: {
+                "accion": "comprobar",
+                "date": date.value
+            },
+            url: 'inc/modelos/form.php',
+            dataType: 'json',
+            success: function(data) {                
+                let resultado = data;
+                if(resultado.respuesta == 'existe') {
+                    title.value = resultado.entrada.title;
+                    text.value = resultado.entrada.text;
+                    date.value = resultado.entrada.date;
+                    accion.value = "actualizar";
+                } else {
+                    title.value = "";
+                    text.value = "";
+                    accion.value = "crear";
+                }
+            }
+        });
+    }
+
+    formulario.onsubmit = (e) => {
+        e.preventDefault;
+    
+        let dateUpdated = new Date();
+        let pag = document.querySelector(".boton.actual").innerText;
+
+        $.ajax({
+            type: 'post',
+            data: {
+                "title": title.value,
+                "text": text.value,
+                "date": date.value,
+                "accion": accion.value,
+                "actualizado": dateUpdated
+            },
+            url: 'inc/modelos/form.php',
+            dataType: 'json',
+            success: function(data) {
+                swal({
+                    type: 'success',
+                    title: 'Nueva entrada',
+                    text: 'La entrada se creo correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                cambiarFecha();
+                comprobarFecha();
+                extraer(pag);
+            }
+        });
+        return false;
+    }
 
     const meses = [
         "Enero",
@@ -32,15 +96,17 @@ $(function(){
         "Sábado"
     ];
 
-    //Tomo la fecha actual
-    let fechaActual = new Date();
-    let diaMes = fechaActual.getDate();
-    let mes = fechaActual.getMonth()+1;
-    let año = fechaActual.getFullYear();
-    //Cambio la fecha por defecto del input a la actual
-    date.value = `${año}-${(mes<10)?"0":""}${mes}-${diaMes}`;
-
-    function extraer() {
+    function cambiarFecha(){
+        //Tomo la fecha actual
+        let fechaActual = new Date();
+        let diaMes = fechaActual.getDate();
+        let mes = fechaActual.getMonth()+1;
+        let año = fechaActual.getFullYear();
+        //Cambio la fecha por defecto del input a la actual
+        date.value = `${año}-${(mes<10)?"0":""}${mes}-${(diaMes<10)?"0":""}${diaMes}`;
+    }
+    
+    function extraer(pag) {
         //Leer las entradas de la base de datos
         $.ajax({
             type: 'get',
@@ -54,7 +120,7 @@ $(function(){
 
                     //Muestra los resultados y escribe el JSON
                     crearJson(resultado.entradas);
-                    opciones(resultado, 1);
+                    opciones(resultado, pag);
                 } else {
                     alert("Ha habido un error al extraer las entradas en la base de datos");                   
                 }
@@ -211,21 +277,37 @@ $(function(){
         // });
     }
 
-    async function opciones(resultado, numero=1) {
+    //Muestra las opciones borrar y editar entrada
+    async function opciones(resultado, pag=1) {
         //Espero que muestre todas las entradas
-        let fetch = await mostrar(resultado, numero);
+        await mostrar(resultado, pag);
 
         let eliminar = document.getElementsByClassName("delete");
         let editar = document.getElementsByClassName("edit");
 
         for (let btnEliminar of eliminar) {
+            //Al hacer click en eliminar
             btnEliminar.onclick = ()=> {
                 //Eliminar entrada
-                eliminarEntrada(btnEliminar.id);
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Si, eliminar!'
+                }).then((result) => {
+                    if (result.value) {
+                        eliminarEntrada(btnEliminar.id, pag);        
+                    }
+                })
+                
             };
         }
 
         for (let btnEditar of editar) {
+            //Al hacer click en editar
             btnEditar.onclick = ()=> {
                 //Cambiar fecha del input
                 editarEntrada(btnEditar);
@@ -233,7 +315,8 @@ $(function(){
         }
     }
 
-    function eliminarEntrada(date) {
+    function eliminarEntrada(date, pag) {
+        
         $.ajax({
             type: 'post',
             data: {
@@ -245,11 +328,18 @@ $(function(){
             success: function(data) {                
                 let resultado = data;
                 if(resultado.respuesta == "exito"){
-                    //Si va bien
-                    window.location.href = 'index.php';
+                    //Si va bien volvemos a cargar las entradas
+                    Swal.fire(
+                        '¡Eliminado!',
+                        'La entrada ha sido borrada.',
+                        'success'
+                    )
+                    cambiarFecha();
+                    comprobarFecha();
+                    extraer(pag);
                 }
             }
-        });
+          });
     }
 
     function editarEntrada(btnEditar) {
@@ -257,10 +347,12 @@ $(function(){
                 let titulo = btnEditar.parentElement.parentElement.childNodes[7].innerHTML;
                 let texto = btnEditar.parentElement.parentElement.childNodes[11].childNodes[1].innerHTML;
                 
+                //Lenamos el formulario con la entrada a editar
                 action.value="actualizar";
                 title.value=titulo;
                 text.value=texto;
 
+                //Animación que nos lleva hacia arriba
                 $('body, html').animate({
                     scrollTop: '0px'
                 }, 300);

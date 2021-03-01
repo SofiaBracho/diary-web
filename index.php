@@ -14,7 +14,7 @@
     </header>
     
     <section class=contenedor>
-        <form action="#" id="formulario">
+        <form id="formulario">
             <div class="seccion-superior">
                 <label for="date">
                     <i class=""></i>
