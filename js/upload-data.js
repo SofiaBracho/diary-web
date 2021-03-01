@@ -19,11 +19,11 @@ $(function(){
             $.ajax({
                 type: 'post',
                 data: datos,
-                url: 'php/insert.php',
+                url: 'inc/funciones/insert.php',
                 dataType: 'json',
                 success: function(data) {
                     let resultado = data;
-                   
+                   console.log(resultado)
                     if(resultado.respuesta == 'exito') {
                         console.log("Se han insertado todas las entradas en la base de datos!");
                     } else {

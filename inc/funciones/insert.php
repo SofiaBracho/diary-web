@@ -1,13 +1,14 @@
 <?php
-    require_once "db.php";
+    require_once "../inc/funciones/db.php";
+    session_start();
 
     foreach ($_POST as $key => $data) {
 
         try {
             //Se insertan todas las entradas en la tabla
-            $sql = " INSERT INTO `entradas` (`id`, `date`, `dateUpdated`, `title`, `text`) VALUES (NULL, ?, ?, ?, ?) ";
+            $sql = " INSERT INTO `entradas` (`id`, `date`, `dateUpdated`, `title`, `text`, `id_usuario`) VALUES (NULL, ?, ?, ?, ?, ?) ";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ssss', $key, $data["dateUpdated"], $data["title"], $data["text"]);
+            $stmt->bind_param('ssssi', $key, $data["dateUpdated"], $data["title"], $data["text"], $_SESSION["id"]);
 
             $stmt->execute();
 

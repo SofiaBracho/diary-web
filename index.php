@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable="yes">
-    <title>JSON</title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="https://kit.fontawesome.com/72df3b1037.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <header class="contenedor">
-        <h1>Miny Diary Web</h1>
-        <button id="boton-subir">Subir</button>
+<?php
+    include 'inc/templates/header.php';
+    include 'inc/funciones/sesiones.php';
+    include 'inc/funciones/pagina.php';
+    session_start();
+    usuario_autenticado();
+?>
+    <header class="contenedor header">
+        <h1>Mini Diary Web</h1>
+        <div class="botones">
+            <a href="login.php?cerrar_sesion=true"><button id="boton-logout"> Cerrar Sesión </button></a>
+            <button id="boton-subir"> Subir </button>
+        </div>
     </header>
     
     <section class=contenedor>
@@ -44,9 +43,6 @@
         </div>
     </section>
 
-    <script src="js/jquery-1.12.0.min.js"></script>
-    <script src="js/show-data.js"></script>
-    <script src="js/form.js"></script>
-    <script src="js/upload-data.js"></script>
-</body>
-</html>
+<?php
+    include_once "inc/templates/footer.php";
+?>

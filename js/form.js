@@ -17,7 +17,7 @@ $(function(){
                 "accion": "comprobar",
                 "date": date.value
             },
-            url: 'php/form.php',
+            url: 'inc/modelos/form.php',
             dataType: 'json',
             success: function(data) {                
                 let resultado = data;
@@ -49,11 +49,11 @@ $(function(){
                 "accion": accion.value,
                 "actualizado": dateUpdated
             },
-            url: 'php/form.php',
+            url: 'inc/modelos/form.php',
             dataType: 'json',
             success: function(data) { 
                 //Recargar pagina para mostrar cambios
-                window.location.href = 'index.html';
+                window.location.href = 'index.php';
             }
         });
     }

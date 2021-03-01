@@ -1,1 +1,24 @@
-{"metadata":{"application":"Mini Diary","version":"2.5.6","dateUpdated":"2021-02-16T14:52:58.362Z"},"entries":{"2021-02-14":{"dateUpdated":"Sun Feb 14 2021 15:59:48 GMT-0400 (hora de Venezuela)","title":"Hoy es hoy","text":"Mañana no jejeje"},"2021-02-15":{"dateUpdated":"Sun Feb 14 2021 11:51:40 GMT-0400 (hora de Venezuela)","title":"Mañana es hoy","text":"Ayer también"},"2021-02-16":{"dateUpdated":"Sun Feb 14 2021 13:20:00 GMT-0400 (hora de Venezuela)","title":"sdgsdg","text":"sgsdag"},"2021-02-17":{"dateUpdated":"Sun Feb 14 2021 13:20:29 GMT-0400 (hora de Venezuela)","title":"sdfasdf","text":"asdfsadf"},"2021-02-18":{"dateUpdated":"Sun Feb 14 2021 13:20:40 GMT-0400 (hora de Venezuela)","title":"sdfdsf","text":"asdfsdf"},"2021-02-19":{"dateUpdated":"Sun Feb 14 2021 13:20:48 GMT-0400 (hora de Venezuela)","title":"sdfsdf","text":"dsafdsf"}}}
+{
+    "metadata": {
+        "application": "Mini Diary",
+        "version": "2.5.6",
+        "dateUpdated": "2021-02-22T14:27:56.109Z"
+    },
+    "entries": {
+        "2021-02-16": {
+            "dateUpdated": "Tue Feb 16 2021 13:05:00 GMT-0400 (hora de Venezuela)",
+            "title": "Hoy es mi cumpleaños",
+            "text": "Porque soy el admin"
+        },
+        "2021-02-17": {
+            "dateUpdated": "Tue Feb 16 2021 18:42:46 GMT-0400 (hora de Venezuela)",
+            "title": "Mi password es",
+            "text": "admin"
+        },
+        "2021-02-22": {
+            "dateUpdated": "Mon Feb 22 2021 10:18:48 GMT-0400 (hora de Venezuela)",
+            "title": "Es 20",
+            "text": "Hoy es 20 y quiero agragar unas funciones a la app"
+        }
+    }
+}

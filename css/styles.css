@@ -24,6 +24,31 @@ li {
     margin: 1.5rem 0;
     padding: 2rem;
     border-radius: 5px;
+    position: relative;
+}
+.opciones {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+}
+.delete, .edit {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.delete {
+    color: rgba(122, 18, 49, 0.7);
+    margin-right: .5rem;
+    transition: .3s;
+}
+.delete:hover {
+    color: rgb(122, 18, 49);
+}
+.edit {
+    color: rgba(196, 145, 7, 0.7);
+    transition: .3s;
+}
+.edit:hover {
+    color: rgba(196, 145, 7, 1);
 }
 h1 {
     text-align: center;
@@ -37,11 +62,14 @@ h1 {
     color: #0547b1;
 }
 /*HEADER*/
+.header {
+    display: flex;
+    justify-content: space-between;
+}
 header h1 {
     display: inline-block;
 }
-header button {
-    float: right;
+.botones button {
     margin-top: 1.5rem;
     padding: 1rem;
     border: none;
@@ -51,22 +79,19 @@ header button {
     cursor: pointer;
     transition: .3s;
 }
-header button:hover {
+.botones button:hover {
     background: rgb(53, 129, 227);
-    padding-bottom: 1.2rem;
-    padding-top: .8rem;
     color: #fff;
 }
 @media (max-width: 600px) {
     header {
         display: flex;
-        flex-direction: column-reverse;
     }
     header h1 {
         display: block;
         margin-bottom: 3rem;
     }
-    header button {
+    .botones button {
         float: none;
     }
 }
@@ -157,4 +182,92 @@ input[type="submit"]:hover {
         width: 90%;
         text-align: center;
     }
+}
+/** LOGIN **/
+.login,
+.crear-cuenta {
+    background: #c84e4e;
+}
+.contenedor-formulario {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+.contenedor-formulario h1 {
+    text-align: center;
+    color: #2a42b3;
+}
+.contenedor-formulario h1  span{
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+.caja-login {
+    background-color: #F2F2F2;
+    border: 1px solid #707070;
+    max-width: 650px;
+    width: 90%;
+    margin: 0 auto;
+    min-height: 300px;
+    -webkit-box-shadow: 0px 25px 35px -17px rgba(0,0,0,0.56);
+    -moz-box-shadow: 0px 25px 35px -17px rgba(0,0,0,0.56);
+    box-shadow: 0px 25px 35px -17px rgba(0,0,0,0.56);
+    padding: 3rem;
+}
+.campo {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+.campo-enviar {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+.campo label {
+    flex: 0 0 100px;
+    text-align: right;
+    padding-right: 1rem;
+}
+.campo input[type="text"],
+.campo input[type="password"] {
+    height: 3rem;
+    border: 0;
+    flex: 1;
+    border: 1px solid #455A64;
+    border-radius: 5rem;
+    padding-left: 2rem;
+    overflow: hidden;
+    transition: all .3s ease;
+}
+@media only screen and (max-width: 500px) {
+    .campo label {
+        display: none;
+    }
+    .boton-formulario {
+        flex: 1;
+    }
+}
+.enviar {
+   justify-content: flex-end;
+}
+.boton-formulario {
+    background-color: #FDD835;
+    text-align: center;
+    transition: background-color .5s ease-in-out;
+    display: block;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    border: none;
+    font-weight: 900;
+    overflow: hidden;
+}
+.boton-formulario:hover {
+    cursor: pointer;
+    background-color: rgb(219, 184, 29)!important;
+}
+.campo a {
+    color: black;
+    text-decoration: none;
 }

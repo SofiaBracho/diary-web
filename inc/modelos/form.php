@@ -1,5 +1,6 @@
 <?php
-    require_once "db.php";
+    require_once "../funciones/db.php";
+    session_start();
     
     if(isset($_POST["accion"])) {
 
@@ -8,9 +9,9 @@
             try {
                 $date = $_POST["date"];
         
-                $sql = " SELECT * FROM `entradas` WHERE `date` = ? ";
+                $sql = " SELECT * FROM `entradas` WHERE `date` = ? AND `id_usuario` = ? ";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("s", $date);
+                $stmt->bind_param("si", $date, $_SESSION["id"]);
                 $stmt->execute();
         
                 $entrada = $stmt->get_result();
@@ -48,10 +49,10 @@
             $text = $_POST["text"];
     
             try {
-                $sql = "INSERT INTO `entradas`(`id`, `date`, `dateUpdated`, `title`, `text`) 
-                        VALUES (NULL, ?, ?, ?, ?) ";
+                $sql = "INSERT INTO `entradas`(`id`, `date`, `dateUpdated`, `title`, `text`, `id_usuario`) 
+                        VALUES (NULL, ?, ?, ?, ?, ?) ";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ssss", $date, $dateUpdated, $title, $text);
+                $stmt->bind_param("ssssi", $date, $dateUpdated, $title, $text, $_SESSION["id"]);
                 $stmt->execute();
     
                 $respuesta = [
@@ -72,9 +73,9 @@
             $text = $_POST["text"];
     
             try {
-                $sql = "UPDATE `entradas` SET `dateUpdated`=?,`title`=?,`text`=? WHERE `date`=? ";
+                $sql = "UPDATE `entradas` SET `dateUpdated`=?,`title`=?,`text`=? WHERE `date`= ? AND `id_usuario` = ? ";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ssss", $dateUpdated, $title, $text, $date);
+                $stmt->bind_param("ssssi", $dateUpdated, $title, $text, $date, $_SESSION["id"]);
                 $stmt->execute();
     
                 $respuesta = [
@@ -86,6 +87,27 @@
                 ];
             }        
         }
+
+        //Para eliminar entradas
+        if($_POST["accion"] == "eliminar") {
+            $date = $_POST["date"];
+    
+            try {
+                $sql = " DELETE FROM `entradas` WHERE `date`= ? AND `id_usuario` = ? ";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("si", $date, $_SESSION["id"]);
+                $stmt->execute();
+    
+                $respuesta = [
+                    "respuesta" => "exito"
+                ];
+            } catch (\Exception $e) {
+                $respuesta = [
+                    "respuesta" => "Error: " . $e
+                ];
+            }        
+        }
+        
     }
     
 
