@@ -1,7 +1,7 @@
 <?php
     $json = $_POST["json"];
 
-    $file = fopen("../diary.json", "w");
+    $file = fopen("../../diary.json", "w");
 
     fwrite($file, $json);
 

@@ -213,68 +213,6 @@ $(function(){
                 resolve("success");
             });
 
-        //Obtener las entradas del export.json
-
-        // $.getJSON('diary.json', function(data){
-        //     let entries = data.entries;
-        //     let template = '';
-        //     //Quiero tener la cantidad de elementos para hacer una paginación
-        //     let cantidad = Object.keys(entries).length;
-        //     let cantidadPorPagina = 5;
-        //     let indice = (paginaActual-1) * cantidadPorPagina;
-        //     let final = indice+cantidadPorPagina;
-        //     let cantidadDePaginas = Math.ceil(cantidad/cantidadPorPagina);
-
-        //     for (indice; indice<final; indice++) {
-        //         let key = Object.keys(entries)[indice];
-        //         let entry = entries[key];
-
-        //         //Formating date
-        //         let d = key.split("-");
-        //         let date = new Date(d[0], d[1]-1, d[2])
-        //         let diaSemana = dias[date.getDay()];
-        //         let diaMes = date.getDate();
-        //         let mes = meses[date.getMonth()];
-        //         let año = date.getFullYear();
-
-        //         template += `
-        //             <li>
-        //                 <div class="fecha">${diaSemana + " " + diaMes + " de " + mes + " del " + año }</div>
-        //                 <br/>
-        //                 <h2 class="titulo">${entry.title}</h2>
-        //                 <br/>
-        //                 <div class="texto">
-        //         `;
-        //         //Separo los párrafos y los recorro todos
-        //         let texto = entry.text.split("\n\n");
-        //         texto.forEach(parrafo => {
-        //             template += `
-        //                     <p>${parrafo}</p>
-        //             `;
-        //         });
-        //         //Cierro las etiquetas
-        //         template += `
-        //             </div>
-        //             </li>
-        //         `;
-        //         contenedorDatos.html(template);
-        //     }
-
-        //     let paginacion = $('#paginacion');
-        //     let botones = ``;
-        //     for(let i=1; i<=cantidadDePaginas; i++) {
-        //         if(i==paginaActual) {
-        //             botones += `<button class="boton actual"> ${i} </button>`;
-        //         } else {
-        //             botones += `<button class="boton"> ${i} </button>`;
-        //         }
-        //     }
-        //     paginacion.html(botones);
-
-        //     $('.boton').click(function(){
-        //         leer(this.innerHTML);
-        //     });
-        // });
     }
 
     //Muestra las opciones borrar y editar entrada
@@ -284,6 +222,7 @@ $(function(){
 
         let eliminar = document.getElementsByClassName("delete");
         let editar = document.getElementsByClassName("edit");
+        let numEntradasEnPag = eliminar.length;
 
         for (let btnEliminar of eliminar) {
             //Al hacer click en eliminar
@@ -299,6 +238,9 @@ $(function(){
                     confirmButtonText: '¡Si, eliminar!'
                 }).then((result) => {
                     if (result.value) {
+                        //Si no estoy en la primera página y queda solo una
+                        //entrada me lleva a la anterior despues de borrarla
+                        if(pag>1 && numEntradasEnPag==1) {pag--}
                         eliminarEntrada(btnEliminar.id, pag);        
                     }
                 })
