@@ -238,9 +238,12 @@ $(function(){
                     confirmButtonText: '¡Si, eliminar!'
                 }).then((result) => {
                     if (result.value) {
+<<<<<<< HEAD
                         //Si no estoy en la primera página y queda solo una
                         //entrada me lleva a la anterior despues de borrarla
                         if(pag>1 && numEntradasEnPag==1) {pag--}
+=======
+>>>>>>> master
                         eliminarEntrada(btnEliminar.id, pag);        
                     }
                 })
