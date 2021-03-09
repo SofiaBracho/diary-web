@@ -310,6 +310,7 @@ $(function(){
             },
             "entries": {}
         }
+        var botonExportar = document.querySelector("#boton-exportar");
 
         data.forEach(entry => {
             let key = entry.date;
@@ -321,7 +322,9 @@ $(function(){
         });
 
         json = JSON.stringify(json);
-        escribirJson(json)
+        botonExportar.addEventListener("click", () => {
+            escribirJson(json);
+        });
     }
 
     function escribirJson(json){
@@ -335,7 +338,20 @@ $(function(){
                 console.log(resultado);
 
                 if(resultado.respuesta == 'exito') {
+                    //Alerta que fue escrito el JSON
+                    swal({
+                        type: 'success',
+                        title: 'Exportado',
+                        text: 'Se ha creado un archivo JSON con las entradas',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 } else {
+                    swal({
+                        type: 'error',
+                        title: 'Error!',
+                        text: 'No se pudo exportar el JSON'
+                    })
                 }
             }
         });

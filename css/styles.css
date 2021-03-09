@@ -83,16 +83,21 @@ header h1 {
     background: rgb(53, 129, 227);
     color: #fff;
 }
-@media (max-width: 600px) {
+@media (max-width: 750px) {
     header {
-        display: flex;
+        flex-direction: column;
     }
     header h1 {
         display: block;
-        margin-bottom: 3rem;
+        margin-bottom: 1rem;
     }
     .botones button {
-        float: none;
+        display: block;
+        margin: .25rem 0;
+        width: 100%;
+    }
+    .botones:last-child {
+        margin-bottom: 1rem;
     }
 }
 /*PAGINACION*/
