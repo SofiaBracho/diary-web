@@ -23,7 +23,6 @@ $(function(){
                 dataType: 'json',
                 success: function(data) {
                     let resultado = data;
-                   console.log(resultado)
                     if(resultado.respuesta == 'exito') {
                         swal({
                             type: "success",

@@ -5,17 +5,25 @@
     foreach ($_POST as $key => $data) {
 
         try {
-            //Se insertan todas las entradas en la tabla
-            $sql = " INSERT INTO `entradas` (`id`, `date`, `dateUpdated`, `title`, `text`, `id_usuario`) VALUES (NULL, ?, ?, ?, ?, ?) ";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ssssi', $key, $data["dateUpdated"], $data["title"], $data["text"], $_SESSION["id"]);
-
+            //Se busca si existe la entrada
+            $stmt = $conn->prepare("SELECT * FROM `entradas` WHERE `date` = ? AND id_usuario = ?;");
+            $stmt->bind_param('si', $key, $_SESSION['id']);
             $stmt->execute();
+            $resultado=$stmt->get_result();
+            $entrada=$resultado->fetch_assoc();
 
-            $respuesta = [
-                "respuesta" => "exito"
-            ];
-            $stmt->close();
+            //Si no existe se inserta
+            if(!isset($entrada)){
+                
+                $sql = " INSERT INTO `entradas` (`id`, `date`, `dateUpdated`, `title`, `text`, `id_usuario`) VALUES (NULL, ?, ?, ?, ?, ?) ";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param('ssssi', $key, $data["dateUpdated"], $data["title"], $data["text"], $_SESSION["id"]);
+    
+                $stmt->execute();
+    
+                $stmt->close();
+            }
+            
         } catch (\Exception $e) {
             //Lanza el error
             $respuesta = [
@@ -24,6 +32,10 @@
             ];
         }
     }
+
+    $respuesta = [
+        "respuesta" => "exito"
+    ];
     $conn->close();
     
     die( json_encode($respuesta) );
