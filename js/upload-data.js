@@ -25,9 +25,19 @@ $(function(){
                     let resultado = data;
                    console.log(resultado)
                     if(resultado.respuesta == 'exito') {
-                        console.log("Se han insertado todas las entradas en la base de datos!");
+                        swal({
+                            type: "success",
+                            title: "Importado",
+                            text: "Se han insertado todas las entradas en la base de datos!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     } else {
-                        console.log("Ha habido un error al insertar las entradas en la base de datos");                   
+                        swal({
+                            type: "error",
+                            title: "Error",
+                            text: "Ha habido un error al insertar las entradas en la base de datos"
+                        })
                     }
                 }
             });

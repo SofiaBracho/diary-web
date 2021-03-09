@@ -198,6 +198,7 @@ input[type="submit"]:hover {
     justify-content: center;
     flex-direction: column;
     height: 100vh;
+    color: #fff;
 }
 .contenedor-formulario h1 {
     text-align: center;
@@ -245,6 +246,11 @@ input[type="submit"]:hover {
     overflow: hidden;
     transition: all .3s ease;
 }
+.campo input[type="text"]:focus,
+.campo input[type="password"]:focus {
+    outline: none;
+    background: #e2e0cb;
+}
 @media only screen and (max-width: 500px) {
     .campo label {
         display: none;
@@ -273,6 +279,11 @@ input[type="submit"]:hover {
     background-color: rgb(219, 184, 29)!important;
 }
 .campo a {
-    color: black;
+    color: #3a4ea7;
     text-decoration: none;
+    transition: .3s;
+}
+.campo a:hover {
+    transform: scale(1.1);
+    color: #FDD835;
 }

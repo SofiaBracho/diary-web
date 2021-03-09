@@ -1,5 +1,5 @@
 <?php
-    require_once "../inc/funciones/db.php";
+    require_once "db.php";
     session_start();
 
     foreach ($_POST as $key => $data) {
