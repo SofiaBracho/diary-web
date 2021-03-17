@@ -236,6 +236,7 @@ $(function(){
     function opciones(pag) {
         return new Promise(resolve => {
 
+<<<<<<< HEAD
             let eliminar = document.getElementsByClassName("delete");
             let editar = document.getElementsByClassName("edit");
             let numEntradasEnPag = eliminar.length;
@@ -271,6 +272,34 @@ $(function(){
                     editarEntrada(btnEditar);
                 };
             }
+=======
+        for (let btnEliminar of eliminar) {
+            //Al hacer click en eliminar
+            btnEliminar.onclick = ()=> {
+                //Eliminar entrada
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Si, eliminar!'
+                }).then((result) => {
+                    if (result.value) {
+<<<<<<< HEAD
+                        //Si no estoy en la primera página y queda solo una
+                        //entrada me lleva a la anterior despues de borrarla
+                        if(pag>1 && numEntradasEnPag==1) {pag--}
+=======
+>>>>>>> master
+                        eliminarEntrada(btnEliminar.id, pag);        
+                    }
+                })
+                
+            };
+        }
+>>>>>>> bug-deleting-last-entry
 
             resolve();
         });
