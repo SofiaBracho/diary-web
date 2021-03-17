@@ -7,13 +7,38 @@ $(function(){
     const formulario = document.getElementById("formulario");
     const botonDescargar = document.getElementById('descargar');
     botonDescargar.classList.add("disabled");
-    //MEJOR LE AGREGO UNA CLASE DISABLED
+
+    const meses = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
+    ];
+
+    const dias = [
+        "Domingo",
+        "Lunes",
+        "Martes",
+        "Miércoles",
+        "Jueves",
+        "Viernes",
+        "Sábado"
+    ];
+
+    entradas(1);
+    cambiarFecha();
 
     //Cada vez que se cambia la fecha comprueba si existe la entrada y 
     //trae los datos de la bd
     date.addEventListener("change", comprobarFecha);
-    extraer(1);
-    cambiarFecha();
     comprobarFecha();
 
     function comprobarFecha() {
@@ -68,36 +93,12 @@ $(function(){
                 })
                 cambiarFecha();
                 comprobarFecha();
-                extraer(pag);
+                entradas(pag);
             }
         });
         return false;
     }
 
-    const meses = [
-        "Enero",
-        "Febrero",
-        "Marzo",
-        "Abril",
-        "Mayo",
-        "Junio",
-        "Julio",
-        "Agosto",
-        "Septiembre",
-        "Octubre",
-        "Noviembre",
-        "Diciembre",
-    ];
-
-    const dias = [
-        "Domingo",
-        "Lunes",
-        "Martes",
-        "Miércoles",
-        "Jueves",
-        "Viernes",
-        "Sábado"
-    ];
 
     function cambiarFecha(){
         //Tomo la fecha actual
@@ -109,155 +110,170 @@ $(function(){
         date.value = `${año}-${(mes<10)?"0":""}${mes}-${(diaMes<10)?"0":""}${diaMes}`;
     }
     
+    async function entradas(pag) {
+        let resultado = await extraer(pag);
+        await mostrar(resultado, pag);
+        await opciones(pag);
+
+        //Escribe el JSON si das click en exportar
+        const botonExportar = document.querySelector("#boton-exportar");
+        botonExportar.addEventListener("click", () => {
+            crearJson(resultado.entradas);
+        });
+    }
+
+    //Extrae de la BD las entradas
     function extraer(pag) {
-        //Leer las entradas de la base de datos
-        $.ajax({
-            type: 'get',
-            url: 'inc/funciones/read.php',
-            dataType: 'json',
-            success: function(data) {                
-                let resultado = data;
-
-                if(resultado.respuesta == 'exito') {
-                    // console.log("Se han extraido todas las entradas en la base de datos!");
-
-                    //Muestra los resultados y escribe el JSON
-                    crearJson(resultado.entradas);
-                    opciones(resultado, pag);
-                } else {
-                    alert("Ha habido un error al extraer las entradas en la base de datos");                   
+        return new Promise(resolve => {
+            //Leer las entradas de la base de datos
+            $.ajax({
+                type: 'get',
+                url: 'inc/funciones/read.php',
+                dataType: 'json',
+                success: function(data) {                
+                    let resultado = data;
+    
+                    if(resultado.respuesta == 'exito') {
+                        //Retorna el resultado
+                        resolve(resultado);
+                    } else {
+                        throw new Error('Ha habido un error al extraer las entradas en la base de datos');
+                    }
                 }
-            }
+            });
         });
 
     }
 
+    //Muestra las entradas extraidas
     function mostrar(resultado, paginaActual) {
+        return new Promise(resolve => {
         
-        let entries = resultado.entradas;
-            let template = '';
-            //Quiero tener la cantidad de elementos para hacer una paginación
-            let cantidad = entries.length;
-            let cantidadPorPagina = 5;
-            let indice = (paginaActual-1) * cantidadPorPagina;
-            let final = indice+cantidadPorPagina;
-            let cantidadDePaginas = Math.ceil(cantidad/cantidadPorPagina);
-            
-            for (indice; indice<final; indice++) {
-                if(entries[indice]){
-                    let key = entries[indice].date;
-                    let entry = entries[indice];
-                    let id = entry.id;
-                    
-                    //Formating date
-                    let d = key.split("-");
-                    let date = new Date(d[0], d[1]-1, d[2])
-                    let diaSemana = dias[date.getDay()];
-                    let diaMes = date.getDate();
-                    let mes = meses[date.getMonth()];
-                    let año = date.getFullYear();
-                    
-                    template += `
-                    <li id="${id}">
-                        <div class="opciones">
-                            <a class="delete" id="${key}">
-                                    <i class="fas fa-trash"></i>
-                            </a>
-                            <a class="edit" id="${key}">
-                                    <i class="fas fa-edit"></i>
-                            </a>
-                        </div>
-    
-                    <div class="fecha">
-                        ${diaSemana + " " + diaMes + " de " + mes + " del " + año }
-                    </div>
-                    
-                    <br/>
-                        <h2 class="titulo">${entry.title}</h2>
-                    
-                    <br/>
-                        <div class="texto">
-                    `;
-                    //Separo los párrafos y los recorro todos
-                    let texto = entry.text.split("\n\n");
-                    texto.forEach(parrafo => {
+            let entries = resultado.entradas;
+                let template = '';
+                //Quiero tener la cantidad de elementos para hacer una paginación
+                let cantidad = entries.length;
+                let cantidadPorPagina = 5;
+                let indice = (paginaActual-1) * cantidadPorPagina;
+                let final = indice+cantidadPorPagina;
+                let cantidadDePaginas = Math.ceil(cantidad/cantidadPorPagina);
+                
+                for (indice; indice<final; indice++) {
+                    if(entries[indice]){
+                        let key = entries[indice].date;
+                        let entry = entries[indice];
+                        let id = entry.id;
+                        
+                        //Formating date
+                        let d = key.split("-");
+                        let date = new Date(d[0], d[1]-1, d[2])
+                        let diaSemana = dias[date.getDay()];
+                        let diaMes = date.getDate();
+                        let mes = meses[date.getMonth()];
+                        let año = date.getFullYear();
+                        
                         template += `
-                        <p>${parrafo}</p>
-                        `;
-                    });
-                    //Cierro las etiquetas
-                    template += `
+                        <li id="${id}">
+                            <div class="opciones">
+                                <a class="delete" id="${key}">
+                                        <i class="fas fa-trash"></i>
+                                </a>
+                                <a class="edit" id="${key}">
+                                        <i class="fas fa-edit"></i>
+                                </a>
+                            </div>
+        
+                        <div class="fecha">
+                            ${diaSemana + " " + diaMes + " de " + mes + " del " + año }
                         </div>
-                        </li>
-                    `;
-                    contenedorDatos.html(template);
-
+                        
+                        <br/>
+                            <h2 class="titulo">${entry.title}</h2>
+                        
+                        <br/>
+                            <div class="texto">
+                        `;
+                        //Separo los párrafos y los recorro todos
+                        let texto = entry.text.split("\n\n");
+                        texto.forEach(parrafo => {
+                            template += `
+                            <p>${parrafo}</p>
+                            `;
+                        });
+                        //Cierro las etiquetas
+                        template += `
+                            </div>
+                            </li>
+                        `;
+                        contenedorDatos.html(template);
+    
+                    }
                 }
-            }
-            
-            //Escribe la paginación
-            let paginacion = $('#paginacion');
-            let botones = ``;
-            for(let i=1; i<=cantidadDePaginas; i++) {
-                if(i==paginaActual) {
-                    botones += `<button class="boton actual"> ${i} </button>`;
-                } else {
-                    botones += `<button class="boton"> ${i} </button>`;
+                
+                //Escribe la paginación
+                let paginacion = $('#paginacion');
+                let botones = ``;
+                for(let i=1; i<=cantidadDePaginas; i++) {
+                    if(i==paginaActual) {
+                        botones += `<button class="boton actual"> ${i} </button>`;
+                    } else {
+                        botones += `<button class="boton"> ${i} </button>`;
+                    }
                 }
-            }
-            paginacion.html(botones);
-            
-            //Al hacer click en los botones de paginación
-            $('.boton').click(function(){
-                opciones(resultado, this.innerHTML);
-            });
+                paginacion.html(botones);
+                
+                //Al hacer click en los botones de paginación
+                $('.boton').click(function(){
+                    entradas(this.innerHTML);
+                });
 
-            return new Promise(resolve => {
-                resolve("success");
-            });
+                resolve();
+        });
 
     }
 
     //Muestra las opciones borrar y editar entrada
-    async function opciones(resultado, pag=1) {
-        //Espero que muestre todas las entradas
-        await mostrar(resultado, pag);
+    function opciones(pag) {
+        return new Promise(resolve => {
 
-        let eliminar = document.getElementsByClassName("delete");
-        let editar = document.getElementsByClassName("edit");
-        let numEntradasEnPag = eliminar.length;
+            let eliminar = document.getElementsByClassName("delete");
+            let editar = document.getElementsByClassName("edit");
+            let numEntradasEnPag = eliminar.length;
+    
+            for (let btnEliminar of eliminar) {
+                //Al hacer click en eliminar
+                btnEliminar.onclick = ()=> {
+                    //Eliminar entrada
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "¡No podrás revertir esto!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '¡Si, eliminar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            //Si no estoy en la primera página y queda solo una
+                            //entrada me lleva a la anterior despues de borrarla
+                            if(pag>1 && numEntradasEnPag==1) {pag--}
+                            eliminarEntrada(btnEliminar.id, pag);        
+                        }
+                    })
+                    
+                };
+            }
+    
+            for (let btnEditar of editar) {
+                //Al hacer click en editar
+                btnEditar.onclick = ()=> {
+                    //Cambiar fecha del input
+                    editarEntrada(btnEditar);
+                };
+            }
 
-        for (let btnEliminar of eliminar) {
-            //Al hacer click en eliminar
-            btnEliminar.onclick = ()=> {
-                //Eliminar entrada
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: "¡No podrás revertir esto!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: '¡Si, eliminar!'
-                }).then((result) => {
-                    if (result.value) {
-                        //Si no estoy en la primera página y queda solo una
-                        //entrada me lleva a la anterior despues de borrarla
-                        if(pag>1 && numEntradasEnPag==1) {pag--}
-                        eliminarEntrada(btnEliminar.id, pag);        
-                    }
-                })
-                
-            };
-        }
-
-        for (let btnEditar of editar) {
-            //Al hacer click en editar
-            btnEditar.onclick = ()=> {
-                //Cambiar fecha del input
-                editarEntrada(btnEditar);
-            };
-        }
+            resolve();
+        });
     }
 
     function eliminarEntrada(date, pag) {
@@ -281,7 +297,7 @@ $(function(){
                     )
                     cambiarFecha();
                     comprobarFecha();
-                    extraer(pag);
+                    entradas(pag);
                 }
             }
           });
@@ -313,7 +329,6 @@ $(function(){
             },
             "entries": {}
         }
-        const botonExportar = document.querySelector("#boton-exportar");
 
         data.forEach(entry => {
             let key = entry.date;
@@ -325,9 +340,7 @@ $(function(){
         });
 
         json = JSON.stringify(json);
-        botonExportar.addEventListener("click", () => {
-            escribirJson(json);
-        });
+        escribirJson(json);
     }
 
     function escribirJson(json){
