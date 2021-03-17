@@ -3,8 +3,11 @@ $(function(){
     let title = document.getElementById("title");
     let text = document.getElementById("text");
     let action = document.getElementById("accion");
-    let contenedorDatos = $('#datos');
-    let formulario = document.getElementById("formulario");
+    const contenedorDatos = $('#datos');
+    const formulario = document.getElementById("formulario");
+    const botonDescargar = document.getElementById('descargar');
+    botonDescargar.classList.add("disabled");
+    //MEJOR LE AGREGO UNA CLASE DISABLED
 
     //Cada vez que se cambia la fecha comprueba si existe la entrada y 
     //trae los datos de la bd
@@ -310,7 +313,7 @@ $(function(){
             },
             "entries": {}
         }
-        var botonExportar = document.querySelector("#boton-exportar");
+        const botonExportar = document.querySelector("#boton-exportar");
 
         data.forEach(entry => {
             let key = entry.date;
@@ -346,6 +349,9 @@ $(function(){
                         showConfirmButton: false,
                         timer: 1500
                     })
+                    botonDescargar.href="http://localhost/sofia/diario/diary.json";
+                    botonDescargar.download="diary.json";
+                    botonDescargar.classList.remove("disabled");
                 } else {
                     swal({
                         type: 'error',
@@ -356,5 +362,5 @@ $(function(){
             }
         });
     }
-    
+
 });

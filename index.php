@@ -8,9 +8,10 @@
     <header class="contenedor header">
         <h1>Mini Diary Web</h1>
         <div class="botones">
-            <a href="login.php?cerrar_sesion=true"><button id="boton-logout"> Cerrar Sesión </button></a>
+            <a href="login.php?cerrar_sesion=true" id="boton-logout"> Cerrar Sesión </a>
             <button id="boton-subir"> Subir JSON</button>
-            <button id="boton-exportar"> Exportar a JSON </button>
+            <button id="boton-exportar"> Exportar JSON </button>
+            <a href="#" id="descargar">Descargar</a>
         </div>
     </header>
     
