@@ -42,6 +42,7 @@ li {
 }
 .delete:hover {
     color: rgb(122, 18, 49);
+    font-size: 1.7rem;
 }
 .edit {
     color: rgba(196, 145, 7, 0.7);
@@ -49,6 +50,7 @@ li {
 }
 .edit:hover {
     color: rgba(196, 145, 7, 1);
+    font-size: 1.7rem;
 }
 h1 {
     text-align: center;
@@ -138,6 +140,7 @@ header h1 {
 #paginacion .boton:hover {
     background: rgba(53, 129, 227, .7);
     cursor: pointer;
+    transform: scale(1.1);
 }
 #paginacion .boton.actual {
     background: rgb(28, 66, 163);
@@ -303,4 +306,31 @@ input[type="submit"]:hover {
 .campo a:hover {
     transform: scale(1.1);
     color: #FDD835;
+}
+/*FOOTER*/
+footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #bdbdbd;
+    height: 6rem;
+    font-size: 1.1rem;
+}
+footer .social a:hover {
+    font-size: 2.5rem;
+}
+.social a {
+    font-size: 2rem;
+    text-decoration: none;
+    margin-right: 1rem;
+    transition: .3s;
+}
+.social a:last-of-type {
+    margin-right: 0;
+}
+.text-gradient {
+    background: rgb(55,123,231);
+    background: linear-gradient(90deg, rgba(55,123,231,1) 0%, rgba(15,4,61,1) 78%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

@@ -45,6 +45,22 @@
         </div>
     </section>
 
+    <footer>
+        <div class="copy text-gradient">Todos los derechos reservados ©</div>
+        <div class="social text-gradient"> 
+            <a href="https://minidiary.app/" target="_blank">
+                <i class="fas fa-book"></i>
+            </a>
+            <a href="https://github.com/SofiaBracho" target="_blank"> 
+                <i class="fab fa-github"></i> 
+            </a>
+            <!--Portafolio (cuando lo haga)-->
+            <a href="#" target="_blank">
+                <i class="fas fa-briefcase"></i>
+            </a>
+        </div>
+    </footer>
+
 <?php
     include_once "inc/templates/footer.php";
 ?>
