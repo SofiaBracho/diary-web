@@ -85,13 +85,23 @@ $(function(){
             url: 'inc/modelos/form.php',
             dataType: 'json',
             success: function(data) {
-                swal({
-                    type: 'success',
-                    title: 'Nueva entrada',
-                    text: 'La entrada se creo correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
+                if(accion.value=='crear'){
+                    swal({
+                        type: 'success',
+                        title: 'Nueva entrada',
+                        text: 'La entrada se creo correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }else{
+                    swal({
+                        type: 'success',
+                        title: 'Actualizado',
+                        text: 'La entrada se actualizó correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
                 cambiarFecha();
                 comprobarFecha();
                 entradas(pag);
@@ -195,7 +205,7 @@ $(function(){
                             <div class="texto">
                         `;
                         //Separo los párrafos y los recorro todos
-                        let texto = entry.text.split("\n\n");
+                        let texto = entry.text.split(/\n|\n\n/);
                         texto.forEach(parrafo => {
                             template += `
                             <p>${parrafo}</p>
@@ -306,9 +316,8 @@ $(function(){
 
     function editarEntrada(btnEditar) {
         date.value = btnEditar.id;
-                let titulo = btnEditar.parentElement.parentElement.childNodes[7].innerHTML;
-                let texto = btnEditar.parentElement.parentElement.childNodes[11].childNodes[1].innerHTML;
-                
+                let titulo = btnEditar.parentElement.parentElement.childNodes[7].innerText;
+                let texto = btnEditar.parentElement.parentElement.childNodes[11].innerText;
                 //Lenamos el formulario con la entrada a editar
                 action.value="actualizar";
                 title.value=titulo;

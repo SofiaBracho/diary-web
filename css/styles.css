@@ -20,7 +20,7 @@ ul#datos {
 li {
     list-style: none;
     padding: 0 2rem;
-    background-color: #acacac;
+    background-color: #bdbdbd;
     margin: 1.5rem 0;
     padding: 2rem;
     border-radius: 5px;
@@ -55,11 +55,21 @@ h1 {
     color: grey;
 }
 .fecha {
-    color: #ffffff;
+    color: #5c5c5c;
     font-style: italic;
 }
 .titulo {
     color: #0547b1;
+}
+.texto {
+    color: #222222;
+    font-size: 1.1rem;
+}
+@media only screen and (max-width: 500px) {
+    .opciones {
+        position:static;
+        margin-bottom: 1rem;
+    }    
 }
 /*HEADER*/
 .header {
@@ -69,8 +79,11 @@ h1 {
 header h1 {
     display: inline-block;
 }
-.botones button, .botones a {
-    margin-top: 1.5rem;
+.botones {
+    margin-top: 2rem;
+}
+.botones a {
+    margin-right: 5px;
     padding: 1rem;
     border: none;
     background: #1c42a3;
