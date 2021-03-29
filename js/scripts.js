@@ -6,7 +6,11 @@ $(function(){
     const contenedorDatos = $('#datos');
     const formulario = document.getElementById("formulario");
     const botonDescargar = document.getElementById('descargar');
+    const botonSubir = document.getElementById("boton-subir");
     botonDescargar.classList.add("disabled");
+
+    let botonActual = document.querySelector(".boton.actual");
+    botonActual?pag=botonActual.innerText:pag=1;
 
     const meses = [
         "Enero",
@@ -70,8 +74,6 @@ $(function(){
         e.preventDefault;
     
         let dateUpdated = new Date();
-        let botonActual = document.querySelector(".boton.actual");
-        botonActual?pag=botonActual.innerText:pag=1;
 
         $.ajax({
             type: 'post',
@@ -384,6 +386,46 @@ $(function(){
                 }
             }
         });
+    }
+
+    botonSubir.addEventListener("click", () => {
+        subirJson();
+    })
+
+    function subirJson() {
+        Swal({
+            title: 'Select a file',
+            showCancelButton: true,
+            confirmButtonText: 'Upload',
+            input: 'file',
+            onBeforeOpen: () => {
+                $(".swal2-file").change(function () {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(this.files[0]);
+                });
+            }
+        }).then((file) => {
+            if (file.value) {
+                var formData = new FormData();
+                var file = $('.swal2-file')[0].files[0];
+                formData.append("export", file);
+                $.ajax({
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    method: 'post',
+                    url: 'inc/funciones/export.php',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (resp) {
+                        Swal('Uploaded', 'Your file have been uploaded', 'success');
+                        entradas(pag);
+                    },
+                    error: function() {
+                        Swal({ type: 'error', title: 'Oops...', text: 'Something went wrong!' })
+                    }
+                })
+            }
+        })
     }
 
 });

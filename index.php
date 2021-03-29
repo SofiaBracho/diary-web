@@ -6,7 +6,7 @@
     usuario_autenticado();
 ?>
     <header class="contenedor header">
-        <h1>Mini Diary Web</h1>
+        <h1 class="text-gradient">Mini Diary Web</h1>
         <div class="botones">
             <a href="login.php?cerrar_sesion=true" id="boton-logout"> Cerrar Sesión </a>
             <a id="boton-subir"> Subir JSON</a>

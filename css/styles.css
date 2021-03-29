@@ -334,3 +334,9 @@ footer .social a:hover {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+@media only screen and (max-width: 500px) {
+    footer {
+        flex-direction: column;
+        height: 10rem;
+    }
+}
