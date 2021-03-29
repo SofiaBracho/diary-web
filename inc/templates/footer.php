@@ -6,8 +6,7 @@
 
     //INDEX
     echo (obtenerPaginaActual() == "index") 
-    ? '     <script src="js/show-data.js"></script>
-            <script src="js/upload-data.js"></script>
+    ? '     <script src="js/scripts.js"></script>
       '
     : "";
 ?>
