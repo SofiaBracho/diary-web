@@ -367,7 +367,7 @@ $(function(){
             },
             "entries": {}
         }
-
+        
         data.forEach(entry => {
             let key = entry.date;
             json.entries[key] = {
@@ -376,7 +376,7 @@ $(function(){
                 "text": entry.text
             }
         });
-
+        
         json = JSON.stringify(json);
         escribirJson(json);
     }
@@ -387,9 +387,7 @@ $(function(){
             url: 'inc/funciones/write-json.php',
             dataType: 'json',
             data: {json},
-            success: function(data) {                
-                let resultado = data;
-                console.log(resultado);
+            success: function(resultado) {   
 
                 if(resultado.respuesta == 'exito') {
                     //Alerta que fue escrito el JSON
@@ -400,7 +398,8 @@ $(function(){
                         showConfirmButton: false,
                         timer: 1500
                     })
-                    botonDescargar.href="http://localhost/sofia/diario/diary.json";
+                    const currentUrl = window.location.href;
+                    botonDescargar.href= currentUrl + "/diary.json";
                     botonDescargar.download="diary.json";
                     botonDescargar.classList.remove("disabled");
                 } else {
