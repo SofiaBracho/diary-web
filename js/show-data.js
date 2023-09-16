@@ -56,11 +56,11 @@ $(function(){
                     title.value = resultado.entrada.title;
                     text.value = resultado.entrada.text;
                     date.value = resultado.entrada.date;
-                    accion.value = "actualizar";
+                    action.value = "actualizar";
                 } else {
                     title.value = "";
                     text.value = "";
-                    accion.value = "crear";
+                    action.value = "crear";
                 }
             }
         });
@@ -68,32 +68,41 @@ $(function(){
 
     formulario.onsubmit = (e) => {
         e.preventDefault;
-    
         let dateUpdated = new Date();
-        let pag = document.querySelector(".boton.actual").innerText;
-
+        
         $.ajax({
             type: 'post',
             data: {
                 "title": title.value,
                 "text": text.value,
                 "date": date.value,
-                "accion": accion.value,
+                "accion": action.value,
                 "actualizado": dateUpdated
             },
             url: 'inc/modelos/form.php',
             dataType: 'json',
             success: function(data) {
-                swal({
-                    type: 'success',
-                    title: 'Nueva entrada',
-                    text: 'La entrada se creo correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
+                if(data.respuesta == 'exito') {
+                    //Muestra el resultado
+                    swal({
+                        type: 'success',
+                        title: 'Nueva entrada',
+                        text: 'La entrada se creo correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    
+                } else {
+                    throw new Error('Ha habido un error al extraer las entradas en la base de datos');
+                }
+                
                 cambiarFecha();
                 comprobarFecha();
-                entradas(pag);
+                if(document.querySelector(".boton.actual")) {
+                    let pag = document.querySelector(".boton.actual").innerText;
+                    entradas(pag);
+                }
+                entradas();
             }
         });
         return false;
@@ -123,7 +132,7 @@ $(function(){
     }
 
     //Extrae de la BD las entradas
-    function extraer(pag) {
+    function extraer(pag=0) {
         return new Promise(resolve => {
             //Leer las entradas de la base de datos
             $.ajax({
@@ -236,34 +245,34 @@ $(function(){
     function opciones(pag) {
         return new Promise(resolve => {
 
-<<<<<<< HEAD
-        for (let btnEliminar of eliminar) {
-            //Al hacer click en eliminar
-            btnEliminar.onclick = ()=> {
-                //Eliminar entrada
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: "¡No podrás revertir esto!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: '¡Si, eliminar!'
-                }).then((result) => {
-                    if (result.value) {
-<<<<<<< HEAD
-                        //Si no estoy en la primera página y queda solo una
-                        //entrada me lleva a la anterior despues de borrarla
-                        if(pag>1 && numEntradasEnPag==1) {pag--}
-=======
->>>>>>> master
-                        eliminarEntrada(btnEliminar.id, pag);        
-                    }
-                })
+// <<<<<<< HEAD
+//         for (let btnEliminar of eliminar) {
+//             //Al hacer click en eliminar
+//             btnEliminar.onclick = ()=> {
+//                 //Eliminar entrada
+//                 Swal.fire({
+//                     title: '¿Estás seguro?',
+//                     text: "¡No podrás revertir esto!",
+//                     type: 'warning',
+//                     showCancelButton: true,
+//                     confirmButtonColor: '#3085d6',
+//                     cancelButtonColor: '#d33',
+//                     confirmButtonText: '¡Si, eliminar!'
+//                 }).then((result) => {
+//                     if (result.value) {
+// <<<<<<< HEAD
+//                         //Si no estoy en la primera página y queda solo una
+//                         //entrada me lleva a la anterior despues de borrarla
+//                         if(pag>1 && numEntradasEnPag==1) {pag--}
+// =======
+// >>>>>>> master
+//                         eliminarEntrada(btnEliminar.id, pag);        
+//                     }
+//                 })
                 
-            };
-        }
-=======
+//             };
+//         }
+// =======
             let eliminar = document.getElementsByClassName("delete");
             let editar = document.getElementsByClassName("edit");
             let numEntradasEnPag = eliminar.length;
@@ -299,7 +308,7 @@ $(function(){
                     editarEntrada(btnEditar);
                 };
             }
->>>>>>> v2.0.0
+// >>>>>>> v2.0.0
 
             resolve();
         });
