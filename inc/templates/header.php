@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://kit.fontawesome.com/72df3b1037.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.cdnfonts.com/css/nautilus-pompilius" rel="stylesheet">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
