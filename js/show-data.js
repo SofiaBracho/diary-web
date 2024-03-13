@@ -399,8 +399,8 @@ $(function(){
                         timer: 1500
                     })
                     const currentUrl = window.location.href;
-                    botonDescargar.href= currentUrl + "/diary.json";
-                    botonDescargar.download="diary.json";
+                    botonDescargar.href = location.origin + "/diary-web/diary.json";
+                    botonDescargar.download = "diary.json";
                     botonDescargar.classList.remove("disabled");
                 } else {
                     swal({
