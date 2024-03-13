@@ -40,11 +40,9 @@ A web-based diary application for writing private journal entries. Inspired on M
 - **JSON import**: restore entries from backup
 
 
-<!-- ## 🖥️ Demo
+## 🖥️ Demo
 
-![Flashcards Demo GIF](https://github.com/SofiaBracho/flashcards/blob/master/media/demo.gif)
-
-<a href="https://youtu.be/9urd2xRv_1Q">**Full demo on Youtube**</a> -->
+![Diary Demo GIF](https://github.com/SofiaBracho/diary-web/blob/master/img/demo.gif)
 
 
 ## 📱 User Experience
@@ -60,8 +58,6 @@ A web-based diary application for writing private journal entries. Inspired on M
 - Seamless JSON import enables restoring entries if needed
 
 Mini Diary Web provides a straightforward way to journal online with key features for security, portability, and convenience. The minimalist design focuses on writing without distractions. An excellent web-based companion to the MiniDiary desktop application.
-
-<!-- ------------------------------------ -->
 
 
 
@@ -104,7 +100,7 @@ Open XAMPP control panel and select start PHP and start MySQL, then access local
 ### 4. Open the App in your local host
 
 ```shell
-http://localhost/
+http://localhost/diary-web/
 ```
 
 ### 5. Register and login
