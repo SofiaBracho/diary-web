@@ -18,9 +18,6 @@
 </div>
 
 
-
-# Mini Diary Web
-
 A web-based diary application for writing private journal entries. Inspired on MiniDiary desktop app ([by Samuel Meuli](https://github.com/samuelmeuli)).
 
 
