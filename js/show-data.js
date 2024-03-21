@@ -1,5 +1,6 @@
 $(function(){
     let date = document.getElementById("date");
+
     let title = document.getElementById("title");
     let text = document.getElementById("text");
     let action = document.getElementById("accion");
@@ -7,6 +8,8 @@ $(function(){
     const formulario = document.getElementById("formulario");
     const botonDescargar = document.getElementById('descargar');
     botonDescargar.classList.add("disabled");
+
+
 
     const meses = [
         "Enero",
@@ -42,11 +45,13 @@ $(function(){
     comprobarFecha();
 
     function comprobarFecha() {
+        dateFormated = new Date(date.value).toISOString().split('T')[0]; // format date
+
         $.ajax({
             type: 'post',
             data: {
                 "accion": "comprobar",
-                "date": date.value
+                "date": dateFormated
             },
             url: 'inc/modelos/form.php',
             dataType: 'json',
@@ -69,15 +74,16 @@ $(function(){
     formulario.onsubmit = (e) => {
         e.preventDefault;
         let dateUpdated = new Date();
+        dateUpdatedFormated = dateUpdated.toISOString().split('T')[0]
         
         $.ajax({
             type: 'post',
             data: {
                 "title": title.value,
                 "text": text.value,
-                "date": date.value,
+                "date": dateFormated,
                 "accion": action.value,
-                "actualizado": dateUpdated
+                "actualizado": dateUpdatedFormated
             },
             url: 'inc/modelos/form.php',
             dataType: 'json',
@@ -399,7 +405,7 @@ $(function(){
                         timer: 1500
                     })
                     const currentUrl = window.location.href;
-                    botonDescargar.href = location.origin + "/diary-web/diary.json";
+                    botonDescargar.href = location.origin + "/diary.json";
                     botonDescargar.download = "diary.json";
                     botonDescargar.classList.remove("disabled");
                 } else {

@@ -1,9 +1,9 @@
 <?php
-    include 'inc/templates/header.php';
-    include 'inc/funciones/sesiones.php';
-    include 'inc/funciones/pagina.php';
     session_start();
+    include 'inc/funciones/sesiones.php';
     usuario_autenticado();
+    include 'inc/templates/header.php';
+    include 'inc/funciones/pagina.php';
 ?>
     <header class="contenedor header">
         <h1>Mini Diary Web</h1>
